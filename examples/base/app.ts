@@ -5,6 +5,15 @@ axios({
   method: 'get',
   url: '/base/get',
   params: {
+    foo1: 'bar',
+    foo2: 'baz'
+  }
+})
+
+axios({
+  method: 'get',
+  url: '/base/get',
+  params: {
     foo: ['bar', 'baz']
   }
 })
@@ -43,13 +52,14 @@ axios({
   url: '/base/get',
   params: {
     baz: 'bar',
-    foo: null,
+    foo1: null,
+    foo2: undefined
   }
 })
 
 axios({
   method: 'get',
-  url: '/base/get#hash',
+  url: '/base/get#hash?bar=foo',
   params: {
     foo: 'baz'
   }
