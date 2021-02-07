@@ -1,4 +1,6 @@
-import { isPlainObject } from './utils'
+import { head } from 'shelljs'
+import { Method } from '../types'
+import { deepMerge, isPlainObject } from './utils'
 
 // 规范化headers 的属性名
 function normalizeHeaderName(headers: any, normalizedName: string): void {
@@ -42,4 +44,21 @@ export function parseHeaders(headers: string): any {
     parsed[key] = val
   })
   return parsed
+}
+
+// 根据method，展平合并策略时的headers
+export function flattenHeaders(headers: any, method: Method): any {
+  if (!headers) {
+    return headers
+  }
+
+  headers = deepMerge(headers.common, headers[method], headers)
+
+  const methodsToDelete = ['delete', 'get', 'head', 'options', 'post', 'put', 'patch', 'common']
+
+  methodsToDelete.forEach(method => {
+    delete headers[method]
+  })
+
+  return headers
 }
