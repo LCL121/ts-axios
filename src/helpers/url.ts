@@ -1,4 +1,4 @@
-import { isDate, isPlainObject } from './utils'
+import { isDate, isPlainObject, isURLSearchParams } from './utils'
 
 interface URLOrigin {
   protocol: string
@@ -18,37 +18,48 @@ function encode(val: string): string {
 }
 
 // 生成url
-export function buildUrl(url: string, params?: any): string {
+export function buildUrl(
+  url: string,
+  params?: any,
+  paramsSerializer?: (params: any) => string
+): string {
   if (!params) {
     return url
   }
+  let serializedParams
 
-  const parts: string[] = []
-  Object.keys(params).forEach(key => {
-    const val = params[key]
-    // 值为null 或undefined
-    if (val === null || typeof val === 'undefined') {
-      return
-    }
-    let values = []
-    // 其他值转换成数组，进行统一处理
-    if (Array.isArray(val)) {
-      values = val
-      key += '[]'
-    } else {
-      values = [val]
-    }
-    values.forEach(val => {
-      if (isDate(val)) {
-        val = val.toISOString()
-      } else if (isPlainObject(val)) {
-        val = JSON.stringify(val)
+  if (paramsSerializer) {
+    serializedParams = paramsSerializer(params)
+  } else if (isURLSearchParams(params)) {
+    serializedParams = params.toString()
+  } else {
+    const parts: string[] = []
+    Object.keys(params).forEach(key => {
+      const val = params[key]
+      // 值为null 或undefined
+      if (val === null || typeof val === 'undefined') {
+        return
       }
-      parts.push(`${encode(key)}=${encode(val)}`)
+      let values = []
+      // 其他值转换成数组，进行统一处理
+      if (Array.isArray(val)) {
+        values = val
+        key += '[]'
+      } else {
+        values = [val]
+      }
+      values.forEach(val => {
+        if (isDate(val)) {
+          val = val.toISOString()
+        } else if (isPlainObject(val)) {
+          val = JSON.stringify(val)
+        }
+        parts.push(`${encode(key)}=${encode(val)}`)
+      })
     })
-  })
 
-  let serializedParams = parts.join('&')
+    serializedParams = parts.join('&')
+  }
 
   if (serializedParams) {
     // 判断是否有哈希
