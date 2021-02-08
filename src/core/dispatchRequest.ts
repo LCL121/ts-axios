@@ -1,9 +1,8 @@
 import { AxiosRequestConfig, AxiosPromise, AxiosResponse } from '../types'
 import xhr from './xhr'
-import { buildUrl } from '../helpers/url'
+import { buildURL, combineURL, isAbsoluteURL } from '../helpers/url'
 import { flattenHeaders } from '../helpers/headers'
 import transform from './transform'
-import { combineURL, isAbsoluteURL } from '../helpers/utils'
 
 export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromise {
   throwIfCancellationRequest(config)
@@ -26,7 +25,7 @@ export function transformURL(config: AxiosRequestConfig): string {
   if (baseURL && !isAbsoluteURL(url!)) {
     url = combineURL(baseURL, url)
   }
-  return buildUrl(url!, params, paramsSerializer)
+  return buildURL(url!, params, paramsSerializer)
 }
 
 function transformResponseData(res: AxiosResponse): AxiosResponse {

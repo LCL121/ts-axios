@@ -18,7 +18,7 @@ function encode(val: string): string {
 }
 
 // 生成url
-export function buildUrl(
+export function buildURL(
   url: string,
   params?: any,
   paramsSerializer?: (params: any) => string
@@ -90,4 +90,14 @@ export function isURLSameOrigin(requestURL: string): boolean {
   return (
     parsedOrigin.protocol === currentOrigin.protocol && parsedOrigin.host === currentOrigin.host
   )
+}
+
+// 判断是否是绝对地址
+export function isAbsoluteURL(url: string): boolean {
+  return /^([a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
+}
+
+// URL 拼接
+export function combineURL(baseURL: string, relativeURL?: string) {
+  return relativeURL ? `${baseURL.replace(/\/+$/, '')}/${relativeURL.replace(/^\/+/, '')}` : baseURL
 }
