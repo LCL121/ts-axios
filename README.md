@@ -12,3 +12,4 @@
 9. [withCredentials](./docs/9.withCredentials.md)
 10. [XSRF 防御](./docs/10.XSRF防御.md)
 11. [上传和下载的进度监控](./docs/11.上传和下载的进度监控.md)
+12. [HTTP 授权](./docs/12.HTTP授权.md)
