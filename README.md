@@ -10,4 +10,5 @@
 7. [配置化实现](./docs/7.配置化实现.md)
 8. [取消功能](./docs/8.取消功能.md)
 9. [withCredentials](./docs/9.withCredentials.md)
-10. [XSRF 防御](./docs/10.XSRF 防御.md)
+10. [XSRF 防御](./docs/10.XSRF防御.md)
+11. [上传和下载的进度监控](./docs/11.上传和下载的进度监控.md)
