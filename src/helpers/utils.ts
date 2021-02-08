@@ -15,11 +15,12 @@ export function isPlainObject(val: any): val is Object {
   return toString.call(val) === '[object Object]'
 }
 
-// 判断是否是FormData对象
+// 判断是否是FormData 类型的对象
 export function isFormData(val: any): val is FormData {
   return typeof val !== 'undefined' && val instanceof FormData
 }
 
+// 判断是否是URLSearchParams 类型的对象
 export function isURLSearchParams(val: any): val is URLSearchParams {
   return typeof val !== 'undefined' && val instanceof URLSearchParams
 }
@@ -54,4 +55,14 @@ export function deepMerge(...objs: any[]): any {
   })
 
   return result
+}
+
+// 判断是否是绝对地址
+export function isAbsoluteURL(url: string): boolean {
+  return /(^[a-z][a-z\d\+\-\.]*:)?\/\//i.test(url)
+}
+
+// URL 拼接
+export function combineURL(baseURL: string, relativeURL?: string) {
+  return relativeURL ? `${baseURL.replace(/\/+$/, '')}/${relativeURL.replace(/^\/+/, '')}` : baseURL
 }
