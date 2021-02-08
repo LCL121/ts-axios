@@ -19,7 +19,8 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       xsrfCookieName,
       xsrfHeaderName,
       onDownloadProgress,
-      onUploadProgress
+      onUploadProgress,
+      auth
     } = config
     // 创建request 实例
     const request = new XMLHttpRequest()
@@ -114,6 +115,11 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
         if (xsrfValue) {
           headers[xsrfHeaderName] = xsrfValue
         }
+      }
+
+      // 将Authorization 添加到headers
+      if (auth) {
+        headers['Authorization'] = `Basic ${btoa(`${auth.username}:${auth.password}`)}`
       }
 
       // 将header 放入请求的headers
