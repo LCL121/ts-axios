@@ -14,15 +14,15 @@ axios.post('http://localhost:8088/more/server2', {}, {
   console.log(res)
 })
 
-// // xsrf demo
-// const instance = axios.create({
-//   xsrfCookieName: 'XSRF-TOKEN-D',
-//   xsrfHeaderName: 'X-XSRF-TOKEN-D'
-// })
+// xsrf demo
+const instance = axios.create({
+  xsrfCookieName: 'XSRF-TOKEN-D',
+  xsrfHeaderName: 'X-XSRF-TOKEN-D'
+})
 
-// instance.get('/more/get').then(res => {
-//   console.log('csrf demo:', res)
-// })
+instance.get('/more/get').then(res => {
+  console.log('csrf demo:', res)
+})
 
 // // http auth demo
 // axios.post('/more/post', {

@@ -20,6 +20,11 @@ app.use(webpackDevMiddleware(complier, {
 }))
 
 app.use(webpackHotMiddleware(complier))
+app.use(express.static(__dirname, {
+  setHeaders(res) {
+    res.cookie('XSRF-TOKEN-D', '1234abc')
+  }
+}))
 
 app.use(express.static(__dirname))
 
