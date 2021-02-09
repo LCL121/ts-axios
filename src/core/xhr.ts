@@ -11,7 +11,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
       data = null,
       url,
       method = 'get',
-      headers,
+      headers = {},
       responseType,
       timeout,
       cancelToken,
@@ -90,7 +90,7 @@ export default function xhr(config: AxiosRequestConfig): AxiosPromise {
 
       // 请求超时
       request.ontimeout = function handleTimeout() {
-        reject(createError(`Timeout of ${timeout}ms exceeded`, config, 'ECONNABORTED', request))
+        reject(createError(`Timeout of ${timeout} ms exceeded`, config, 'ECONNABORTED', request))
       }
 
       // 添加下载监听

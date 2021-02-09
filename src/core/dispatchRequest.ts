@@ -7,9 +7,17 @@ import transform from './transform'
 export default function dispatchRequest(config: AxiosRequestConfig): AxiosPromise {
   throwIfCancellationRequest(config)
   processConfig(config)
-  return xhr(config).then(res => {
-    return transformResponseData(res)
-  })
+  return xhr(config).then(
+    res => {
+      return transformResponseData(res)
+    },
+    e => {
+      if (e && e.response) {
+        e.response = transformResponseData(e.response)
+      }
+      return Promise.reject(e)
+    }
+  )
 }
 
 // 对config 处理，先处理headers（需要根据data 判断），再处理data
